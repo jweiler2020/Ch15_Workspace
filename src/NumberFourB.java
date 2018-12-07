@@ -1,9 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class NumberFour extends JFrame
+public class NumberFourB extends JFrame
 {
-	public NumberFour()
+	public NumberFourB()
 	{
 		super("Drawings");
 		Container c = getContentPane();
@@ -23,7 +23,7 @@ public class NumberFour extends JFrame
 	}
 	public static void main(String[] args)
 	{
-		NumberFour window = new NumberFour();
+		NumberFourB window = new NumberFourB();
 		window.setBounds(100, 100, 200, 200);
 		window.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		window.setVisible(true);
