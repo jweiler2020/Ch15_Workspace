@@ -3,7 +3,7 @@ import java.awt.*;
 
 public class Chessboard extends JFrame
 {
-	ChessSquarePanel[][] board = new ChessSquarePanel[8][8];
+	private ChessSquarePanel[][] board = new ChessSquarePanel[8][8];
 	public Chessboard()
 	{
 		Container c = getContentPane();
@@ -14,9 +14,19 @@ public class Chessboard extends JFrame
 			for(int j = 0; j < 8; j++)
 			{
 				col = (i+j)%2==0 ? Color.WHITE : Color.BLACK;
-				board[i][j] = new ChessSquarePanel(col);
+				board[i][j] = new ChessSquarePanel(col, false);
 				c.add(board[i][j]);
 			}
+		}
+		fillBoard();
+	}
+	
+	private void fillBoard()
+	{
+		int[] arr = {4, 0, 7, 3, 1, 6, 2, 5};
+		for(int i = 0; i < 8; i++)
+		{
+			board[i][arr[i]].setFilled(true);
 		}
 	}
 	
