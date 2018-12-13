@@ -30,7 +30,7 @@ public class Chessboard extends JFrame
 			board[i][arr[i]].setFilled(true);
 		}
 		*/
-		addQueens(new int[][]{{4, 3}}, 1);
+		addQueens(new int[][]{{2, 3}}, 1);
 	}
 	
 	// Board is a list of queen positions
@@ -41,12 +41,13 @@ public class Chessboard extends JFrame
 		{
 			protect = fillRow(protect, board[n][1]);
 			protect = fillColumn(protect, board[n][0]);
-			protect = fillDiagDown(protect, board[n][1], board[n][0]);
+			//protect = fillDiagDownRight(protect, board[n][1], board[n][0]);
+			protect = fillDiagDownLeft(protect, board[n][1], board[n][0]);
 		}
 		
 		
 		
-		
+		// TODO: remove
 		for(int i = 0; i < 8; i++)
 		{
 			for(int j = 0; j < 8; j++)
@@ -74,22 +75,46 @@ public class Chessboard extends JFrame
 		return b;
 	}
 	
-	private boolean[][] fillDiagDown(boolean[][] b, int row, int col)
+	private boolean[][] fillDiagDownRight(boolean[][] b, int row, int col)
 	{
 		if (row > col)
 		{
-			int offset = row - col;
-			for(int i = row; i < 8; i++)
+			for(int i = row-col, j = 0; i < 8; i++, j++)
 			{
-				b[i][i-offset] = true;
+				b[i][j] = true;
+			}
+		}
+		else if(col > row)
+		{
+			for(int i = 0, j = col-row; j < 8; i++, j++)
+			{
+				b[i][j] = true;
 			}
 		}
 		else
 		{
-			int offset = col - row;
-			for(int i = col; i < 8; i++)
+			for(int i = 0, j = 0; i < 8; i++, j++)
 			{
-				b[i-offset][i] = true;
+				b[i][j] = true;
+			}
+		}
+		return b;
+	}
+	
+	private boolean[][] fillDiagDownLeft(boolean[][] b, int row, int col)
+	{
+		if(row > col)
+		{
+			if(row+col < 8)
+			{
+				for (int i = row + col, j = 0; i >= 0 && j < 8; i--, j++)
+				{
+					b[i][j] = true;
+				}
+			}
+			else
+			{
+				for(int i = 7, j = )
 			}
 		}
 		return b;
