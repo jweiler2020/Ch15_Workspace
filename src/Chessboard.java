@@ -1,9 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Chessboard extends JFrame
 {
 	private ChessSquarePanel[][] board = new ChessSquarePanel[8][8];
+	private int[][] pos = new int[8][];
 	public Chessboard()
 	{
 		Container c = getContentPane();
@@ -30,33 +32,49 @@ public class Chessboard extends JFrame
 			board[i][arr[i]].setFilled(true);
 		}
 		*/
-		addQueens(new int[][]{{2, 3}}, 1);
+		addQueens(new ArrayList<>());
+		for(int[] p : pos)
+		{
+			board[p[0]][p[1]].setFilled(true);
+		}
 	}
 	
 	// Board is a list of queen positions
-	private void addQueens(int[][] board, int numQueens)
+	private boolean addQueens(ArrayList<int[]> pos)
 	{
-		boolean[][] protect = new boolean[8][8];
-		for(int n = 0; n < numQueens; n++)
+		if(pos.size() == 8)
 		{
-			protect = fillRow(protect, board[n][1]);
-			protect = fillColumn(protect, board[n][0]);
-			//protect = fillDiagDownRight(protect, board[n][1], board[n][0]);
-			protect = fillDiagDownLeft(protect, board[n][1], board[n][0]);
+			pos.toArray(this.pos);
+			return true;
 		}
-		
-		
-		
-		// TODO: remove
+
+		boolean[][] protect = new boolean[8][8];
+		for(int n = 0; n < pos.size(); n++)
+		{
+			protect = fillRow(protect, pos.get(n)[1]);
+			protect = fillColumn(protect, pos.get(n)[0]);
+			protect = fillDiagRight(protect, pos.get(n)[1], pos.get(n)[0]);
+			protect = fillDiagLeft(protect, pos.get(n)[1], pos.get(n)[0]);
+		}
+
 		for(int i = 0; i < 8; i++)
 		{
 			for(int j = 0; j < 8; j++)
 			{
-				this.board[i][j].setFilled(protect[i][j]);
+				if(!protect[i][j])
+				{
+					pos.add(new int[]{i, j});
+					boolean done = addQueens(pos);
+					if(done)
+						return true;
+					else
+						pos.remove(pos.size()-1);
+				}
 			}
 		}
+		return false;
 	}
-	
+
 	private boolean[][] fillRow(boolean[][] b, int row)
 	{
 		for(int j = 0; j < b[0].length; j++)
@@ -75,7 +93,7 @@ public class Chessboard extends JFrame
 		return b;
 	}
 	
-	private boolean[][] fillDiagDownRight(boolean[][] b, int row, int col)
+	private boolean[][] fillDiagRight(boolean[][] b, int row, int col)
 	{
 		if (row > col)
 		{
@@ -101,20 +119,20 @@ public class Chessboard extends JFrame
 		return b;
 	}
 	
-	private boolean[][] fillDiagDownLeft(boolean[][] b, int row, int col)
+	private boolean[][] fillDiagLeft(boolean[][] b, int row, int col)
 	{
-		if(row > col)
+		if(row+col > 7)
 		{
-			if(row+col < 8)
+			for(int i = col-(7-row), j = 7; i < 8; i++, j--)
 			{
-				for (int i = row + col, j = 0; i >= 0 && j < 8; i--, j++)
-				{
-					b[i][j] = true;
-				}
+				b[i][j] = true;
 			}
-			else
+		}
+		else
+		{
+			for(int i = 0, j = (row+col); j >= 0; i++, j--)
 			{
-				for(int i = 7, j = )
+				b[i][j] = true;
 			}
 		}
 		return b;

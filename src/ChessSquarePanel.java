@@ -13,7 +13,7 @@ public class ChessSquarePanel extends JPanel
 	}
 	
 	public void setFilled(boolean fil) { filled = fil; }
-	
+
 	public void paintComponent(Graphics g)
 	{
 		int w = getWidth();
