@@ -49,12 +49,12 @@ public class Chessboard extends JFrame
 		}
 
 		boolean[][] protect = new boolean[8][8];
-		for(int n = 0; n < pos.size(); n++)
+		for(int[] p : pos)
 		{
-			protect = fillRow(protect, pos.get(n)[1]);
-			protect = fillColumn(protect, pos.get(n)[0]);
-			protect = fillDiagRight(protect, pos.get(n)[1], pos.get(n)[0]);
-			protect = fillDiagLeft(protect, pos.get(n)[1], pos.get(n)[0]);
+			protect = fillRow(protect, p[0]);
+			protect = fillColumn(protect, p[1]);
+			protect = fillDiagRight(protect, p[0], p[1]);
+			protect = fillDiagLeft(protect, p[0], p[1]);
 		}
 
 		for(int i = 0; i < 8; i++)
